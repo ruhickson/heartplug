@@ -23,7 +23,7 @@ const messages = [
   'What happens to your cryptocurrency after you die?',
   'Does anyone get it, or does it disappear into the aether?',
   'Do your loved ones have access to your private keys? Your wealth? Their future financial security?',
-  'With heartplug, you can stop worrying about the future and make the most of the now.'
+  'With Heartplug, you can stop worrying about the future and make the most of the now.'
 ]
 
 const messageIndex = ref(0)

@@ -1,48 +1,29 @@
 <template>
-  <div class="app" :style="{ '--blue-overlay-opacity': blueOverlayOpacity }">
-    <FloatingBlockchains />
-    <CenterText @update:messageIndex="onMessageIndex" />
-    <HeartAnimation :messageIndex="messageIndex" />
-    <div style="height: 200vh;"></div>
+  <div class="app">
+    <template v-if="$route.path !== '/'">
+      <div class="top-bar">
+        <div class="logo-area">
+          <svg class="heart" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 28.5c-.3 0-.6-.1-.8-.3C13.3 26.3 4 18.2 4 11.5 4 6.8 7.8 3 12.5 3c2.4 0 4.6 1.1 6 2.8 1.4-1.7 3.6-2.8 6-2.8C29.2 3 33 6.8 33 11.5c0 6.7-9.3 14.8-11.2 16.7-.2.2-.5.3-.8.3z" fill="#9b4dca"/>
+          </svg>
+          <svg class="plug" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 7V3H14V7H10V3H8V7H4V9H8V13H4V15H8V19H10V15H14V19H16V15H20V13H16V9H20V7H16Z" fill="#9b4dca"/>
+          </svg>
+        </div>
+        <HamburgerMenu />
+      </div>
+    </template>
+    <router-view />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import HeartAnimation from './components/HeartAnimation.vue'
-import FloatingBlockchains from './components/FloatingBlockchains.vue'
-import CenterText from './components/CenterText.vue'
-
-const messageIndex = ref(0)
-const blueOverlayOpacity = ref(0)
-
-function onMessageIndex(idx) {
-  messageIndex.value = idx
-}
-
-function updateOverlay() {
-  const y = window.scrollY
-  // Fade in overlay between 1000 and 1300px
-  if (y <= 1000) blueOverlayOpacity.value = 0
-  else if (y >= 1300) blueOverlayOpacity.value = 1
-  else blueOverlayOpacity.value = (y - 1000) / 300
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', updateOverlay)
-})
-onUnmounted(() => {
-  window.removeEventListener('scroll', updateOverlay)
-})
+import { useRoute } from 'vue-router'
+import HamburgerMenu from './components/HamburgerMenu.vue'
+const $route = useRoute()
 </script>
 
 <style>
-html, body, #app {
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-}
-
 .app {
   min-height: 100vh;
   width: 100vw;
@@ -50,24 +31,29 @@ html, body, #app {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  transition: background 2.5s cubic-bezier(.4,0,.2,1);
+  align-items: stretch;
   position: relative;
 }
-.app::after {
-  content: '';
-  pointer-events: none;
-  position: fixed;
-  left: 0; top: 0; width: 100vw; height: 100vh;
-  z-index: 2;
-  background: linear-gradient(135deg, #1a355c 0%, #3a8dde 60%, #6be0ff 100%);
-  opacity: var(--blue-overlay-opacity, 0);
-  transition: opacity 0.8s cubic-bezier(.4,0,.2,1);
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem 2rem 0.5rem 2rem;
+  position: relative;
+  z-index: 10;
 }
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.heart {
+  width: 40px;
+  height: 40px;
+}
+.plug {
+  width: 24px;
+  height: 24px;
 }
 </style> 
