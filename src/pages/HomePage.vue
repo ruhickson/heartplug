@@ -3,7 +3,7 @@
     <FloatingBlockchains :messageIndex="messageIndex" />
     <CenterText @update:messageIndex="onMessageIndex" />
     <HeartAnimation :messageIndex="messageIndex" />
-    <div style="height: 200vh;"></div>
+    <div style="height: 400vh;"></div>
   </div>
 </template>
 
